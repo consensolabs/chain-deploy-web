@@ -37,22 +37,23 @@ const RegisterView = () => {
     e.preventDefault();
     console.log('CLICKED');
 
-    let data = {
+    const userInfo = {
       username: userName,
       email: userEmail,
       password: password
     };
 
-    axios
-      .post('https://syndlend-kyc.herokuapp.com/v1/users', data)
-
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    console.log(userName, userEmail, password);
+    axios.post('https://syndlend-kyc.herokuapp.com/v1/users', userInfo, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    });
+    // console.log(userName, userEmail, password);
   };
 
   return (

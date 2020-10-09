@@ -15,7 +15,7 @@ import FacebookIcon from 'src/icons/Facebook';
 import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
     height: '100%',
@@ -25,27 +25,34 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const LoginView = () => {
+  // const history = useHistory();
   const classes = useStyles();
   const navigate = useNavigate();
 
   const [userEmail, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log('CLICKED');
-    let data = {
+
+    const userInfo = {
       email: userEmail,
       password: password
     };
-    axios
-      .post('https://syndlend-kyc.herokuapp.com/v1/users/self/login', data)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+    axios.post('https://syndlend-kyc.herokuapp.com/v1/users/self/login', userInfo, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'http://localhost:3000'
+      }
+    }).then((res) => {
+      console.log('token:', res.data.data.token);
+      localStorage.setItem('loginToken', res.data.data.token);
+      // history.push('/register');
+    }).catch((err) => {
+      console.log(err);
+    });
   };
   return (
     <Page className={classes.root} title="Login">
@@ -100,7 +107,7 @@ const LoginView = () => {
               label="Email Address"
               margin="normal"
               name="email"
-              onChange={e => setUserEmail(e.target.value)}
+              onChange={(e) => setUserEmail(e.target.value)}
               type="email"
               value={userEmail}
               variant="outlined"
@@ -110,7 +117,7 @@ const LoginView = () => {
               label="Password"
               margin="normal"
               name="password"
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               value={password}
               variant="outlined"
