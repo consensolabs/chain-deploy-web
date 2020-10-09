@@ -44,7 +44,7 @@ const RegisterView = () => {
     };
 
     axios
-      .post('https://syndlend-kyc.herokuapp.com/', data)
+      .post('https://syndlend-kyc.herokuapp.com/v1/users', data)
 
       .then(res => {
         console.log(res);
