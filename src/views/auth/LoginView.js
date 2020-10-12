@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -34,7 +36,7 @@ const LoginView = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('CLICKED');
+   
 
     const userInfo = {
       email: userEmail,
